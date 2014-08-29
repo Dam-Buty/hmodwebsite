@@ -1,0 +1,23 @@
+<html ng-app="store">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+	<link rel="stylesheet" href="css/hmod.css" media="screen" type="text/css"/>
+</head>
+
+<body>	
+	<section ng-controller="StoreController as store">
+		<div id="container-livre">	
+			<img id="couv" ng-src="{{store.getCouv()}}" ng-click="store.next()"/>	
+			<h1>{{ store.getCurrent().titre }}</h1>
+			<h3>{{ store.getCurrent().auteur }}</h3>
+			<i>Acheter pour {{ store.getCurrent().prix | currency }}</i>
+			<div>{{ store.getCurrent().description }}</div>
+		</div>
+	</section>                      
+
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/app.js"></script>
+</body>
+
+</html>

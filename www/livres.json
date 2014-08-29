@@ -1,0 +1,13 @@
+[{
+	id: 1,
+	titre: "Caucasus",
+	auteur: "Thiephaine Bidule",
+	prix: 1.99,
+	description: "Un super bouquin qu'il est très bien"
+}, {
+	id: 2,
+	titre: "La maison du fond des bayous",
+	auteur: "Tanguy Mandias",
+	prix: 0.99,
+	description: "Celui là par contre j'en peux plus"
+}]

@@ -1,0 +1,46 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+	<link rel="stylesheet" href="css/hmod.css" media="screen" type="text/css"/>
+	<link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+	<header>
+		<div id="inner-header">
+			<img src="ship.png"/>
+			<div id="logo">
+				<div id="inner-logo">
+					<span id="h">H</span>
+					<span id="ouse">ouse made<br/>of dawn<br/><span id="editions">éditions</span></span>
+				</div>
+			</div>
+			<div id="tagline">Le meilleur du fantastique<br/>en numérique</div>
+			<div style="clear: both;"></div>
+		</div>
+	</header>
+
+
+	<script src="jquery-2.1.1.min.js"></script>
+	<script type="text/javascript">
+		$("header").click(function() {
+			$("header").animate({
+				width: "100%",
+				height: "20%",
+				marginLeft: 0,
+				marginTop: 0,
+				padding: "2px"
+			});
+			
+			$("header img").animate({
+				width: "5%",
+				marginTop: "-10px",
+				marginRight: "-10px"
+			
+			});
+		});
+	</script>
+</body>
+
+</html>

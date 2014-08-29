@@ -1,0 +1,77 @@
+
+body {
+	background-image: url(../background.jpg);
+	background-size: 100%;
+	
+}
+
+header {
+	border: 3px solid #E7B109;
+	border-radius: 10px;
+	box-shadow: 0 0 1px 1px black;
+	
+	width: 80%;
+	height: 80%;
+	margin-left: 10%;
+	margin-top: 5%;
+	box-sizing: border-box;
+	padding: 5px;
+}
+
+header img {
+	float: right;
+	width: 40%;
+	margin-top: -20px;
+	margin-right: -10px;
+}
+
+#inner-header {
+	position: relative;
+	border-radius: 5px;
+	width: 100%;
+	height: 100%;
+	
+	background-color: #E7B109;
+	
+	box-sizing: border-box;
+	
+	padding: 10px;
+}
+
+#logo {
+	font-size: 1.5em;
+}	
+
+#logo span {
+	float: left;
+	font-family: 'Rock Salt', cursive;
+	margin-top: -0.5em;
+}
+
+#inner-logo {
+	margin-top: 0.5em;
+}
+
+#h {
+	font-size: 10em !important;
+}
+
+#ouse {
+	margin-top: 1em !important;
+	font-size: 2em !important;
+	margin-left: 0.5em;
+}
+
+#editions  {
+	font-size: 0.8em !important;
+	float: right !important;
+}
+
+#tagline {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	font-family: 'Special Elite', cursive;
+	font-size: 3em;
+}

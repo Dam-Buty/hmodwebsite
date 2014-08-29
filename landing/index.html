@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>DINO</title>
+<meta content="2013-02-28" name="date" />
+<meta content="Damien BUTY" name="author" />
+<meta content="DINO no es tanto una solucion de almacenamiento de datos, sino un espacio estructurado y seguro para dar sentido a tus documentos valiosos. Documents In, kNowledge Out!" name="description" />
+<link rel="stylesheet" href="style.css" media="screen" type="text/css"/>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <img src="logo.png"/>
+    <nav><a href="http://www.dino.mx">DINO</a>
+    <ul>
+        <a href="http://www.dino.mx/contactos"><li>Contacto</li></a>
+        <a href="http://blog.dino.mx"><li>Blog</li></a>
+        <a href="http://www.dino.mx/tarifas"><li>Tarifas</li></a>
+        <a href="http://www.dino.mx"><li>Home</li></a>
+    </ul>
+    <div style="clear: both;"></nav>
+    
+    <section>
+        <h1>Deja de buscar tus documentos</h1>
+        <p>Con <b>DINO</b>, los documentos valiosos de tu empresa <u>siempre</u> estan a tu alcance. Desde cualquier lugar, 24/7.</p> 
+        <iframe width="400" height="224" src="//www.youtube.com/embed/-AkFHYFRlS0" frameborder="0" allowfullscreen></iframe> 
+        <div id="signup">
+            Tu cuenta gratuita te espera!<br/>
+            <input type="text" id="mail" placeholder="Solo necesitas una direccion mail valida"/>
+            <input type="submit" id="bouton" value="Registrate"/><br/>
+            <p id="tip"></p><br/>
+            <p><b>DINO</b> solo necesita tus datos para la creacion y la administracion de tu cuenta. No compartimos tu informacion, de acuerdo con nuestra <a href="#" onclick="toggle_privacy();">politica de privacidad</a>.</p>
+        </div>
+    </section>
+    
+    <section id="privacy" style="display: none;" onclick="toggle_privacy();">
+        <a href="#" onclick="toggle_privacy();">Cerrar</a>
+        <iframe src="../privacy.html">
+        </iframe>
+    </section>
+    
+    <footer>DINO - Documents In, kNowledge Out!</footer>
+    
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="mailgun_validator.js"></script>
+    <script src="../../js/Tag.js"></script>
+    <script type="text/javascript">
+        var valid = false;
+        var go = false;
+        
+        var signup = function() {
+            if (valid) {
+                $("#mail").addClass("loading");    
+                $.ajax({
+                    url: "../../do/doSignup.php",
+                    type: "POST",
+                    data: {
+                        mail: $("#mail").val()
+                    },
+                    statusCode: {
+                        200: function(data) {
+                            $("#mail").removeClass("loading");   
+                            
+                            Tag.init({
+                                tags: [
+                                    "mp"
+                                ],
+                                id: $("#mail").val(),
+                                callback: function() {
+                                    mixpanel.people.set({
+                                        "$email": $("#mail").val(),
+                                        "$created": new Date(),
+                                        "pk": data.pk
+                                    }, function() {
+                                        mixpanel.track("signup", {}, function() {
+                                            window.location.replace("../../welcome.php?action=signup&mail=" + $("#mail").val() + "&pk=" + data.pk);
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        };
+            
+        var validation_in_progress = function() {
+            $("#mail").addClass("loading");    
+            valid = false;
+        };
+        
+        var validation_success = function(data) {
+            $("#mail").removeClass("loading");  
+            $("#tip").unbind();
+            $("#tip").removeClass();
+            
+            if (data.is_valid) {
+                valid = true;
+                $("#tip").html("Esta direccion mail es valida!").removeClass("warning").addClass("OK");
+                
+                if (go) {
+                    signup();
+                }
+            } else {
+                valid = false;
+                go = false;
+                
+                if (data.did_you_mean !== null) {
+                    $("#tip").html("Tal vez quieres decir '<b>" + data.did_you_mean + "</b>'").addClass("warning").click(function() {
+                        $("#mail").val(data.did_you_mean).trigger('focusout');
+                    });
+                } else {
+                    $("#tip").html("Esta direccion mail es invalida!");
+                
+                    $("#mail").focus();
+                }
+                
+                $("#tip").fadeIn();
+            }
+            
+        };
+        
+        var validation_error = function(data) {
+        };
+        
+        var toggle_privacy = function() {
+            if (document.getElementById("privacy").style.display == "none") {
+                document.getElementById("privacy").style.display = "block";
+            } else {
+                document.getElementById("privacy").style.display = "none";
+            }
+            
+            event.stopPropagation();
+        };
+        
+        $(document).ready(function(){
+            $('#mail').mailgun_validator({
+              api_key: 'pubkey-60ffvdtfh3g-o51y16o3s-mc24dfpc11',
+              in_progress: validation_in_progress,
+              success: validation_success,
+              error: validation_error,
+            });
+            
+            $('#mail').keypress(function(e) {
+              if(e.which == 13) {
+                go = true;
+                $('#mail').trigger('focusout');
+                return false;
+              }
+            });
+            
+            $("#bouton").click(function() {
+                go = true;
+                signup();
+            });
+            
+            Tag.init({
+                tags: [
+                    "ga",
+                    "pa"
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
