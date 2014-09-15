@@ -7,7 +7,10 @@ body {
 
 section {    
 	background-color: #E7B109;
-	padding: 10px;
+	padding: 30px;
+	width: 80%;
+	margin-left: 10%;
+    border-radius: 15px;
 }
 
 h3 {
@@ -32,4 +35,15 @@ h3 {
 #buy-button {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#container-gallery {
+	margin-top: 15px;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	padding: 10px;
+}
+
+.thumb {
+	cursor: pointer;
 }

@@ -9,16 +9,19 @@
 <body>	
 	<section ng-controller="StoreController as store" class="container-fluid">
 		<div id="container-livre" class="row">
-	        <img id="couv" class="col-md-4" ng-src="{{store.getCouv()}}"/>	
+	        <img id="couv" class="col-md-4" ng-src="{{store.getCouv(store.current.id)}}"/>	
 		    <div id="livre" class="col-md-6">
-			    <h1>{{ store.getCurrent().titre }}</h1>
-		        <div id="buy-button" class="btn btn-primary">Acheter pour {{ store.getCurrent().prix | currency }}</div>
-			    <div ng-bind-html="store.getCurrent().description"></div>
+			    <h1>{{ store.current.titre }}</h1>
+		        <div id="buy-button" class="btn btn-primary">Acheter pour {{ store.current.prix | currency : "€" }}</div>
+			    <div ng-bind-html="store.current.description"></div>
 		    </div>
 			<div id="auteur" class="col-md-2">
-			    <h3>{{ store.getCurrent().auteur }}</h3>
-			    <img ng-src="{{store.getAuteur()}}" ng-click="store.displayBio()"/>
+			    <h3>{{ store.current.auteur }}</h3>
+			    <img ng-src="{{store.getAuteur(store.current.id)}}" ng-click="store.displayBio()"/>
 			</div>
+		</div>
+		<div id="container-gallery" class="row">
+			<img ng-repeat="livre in store.livres" ng-src="{{store.getThumb(livre.id)}}" class="col-md-1 thumb" ng-click="store.setCurrent($index)"/>
 		</div>
 	</section>                      
 
